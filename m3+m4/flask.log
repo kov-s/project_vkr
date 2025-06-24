@@ -1,0 +1,178 @@
+2025-06-08 04:30:35,921 - __main__ - INFO - База данных инициализирована
+2025-06-08 04:30:35,921 - __main__ - INFO - Запуск сервера Flask...
+2025-06-08 04:30:35,958 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.46:5000
+2025-06-08 04:30:35,958 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-08 04:30:35,958 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 04:30:36,457 - __main__ - INFO - База данных инициализирована
+2025-06-08 04:30:36,457 - __main__ - INFO - Запуск сервера Flask...
+2025-06-08 04:30:36,477 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 04:30:36,477 - werkzeug - INFO -  * Debugger PIN: 114-780-753
+2025-06-08 04:30:41,387 - __main__ - ERROR - Ошибка в index: 'Message' object has no attribute 'id'
+Traceback (most recent call last):
+  File "C:\project\gem_sum\project_sum\app.py", line 47, in index
+    'id': msg.id,
+          ^^^^^^
+AttributeError: 'Message' object has no attribute 'id'
+2025-06-08 04:30:41,387 - werkzeug - INFO - 127.0.0.1 - - [08/Jun/2025 04:30:41] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-06-08 04:32:59,220 - werkzeug - INFO -  * Detected change in 'C:\\project\\gem_sum\\project_sum\\app.py', reloading
+2025-06-08 04:32:59,299 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 04:32:59,879 - __main__ - INFO - База данных инициализирована
+2025-06-08 04:32:59,879 - __main__ - INFO - Запуск сервера Flask...
+2025-06-08 04:32:59,898 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 04:32:59,905 - werkzeug - INFO -  * Debugger PIN: 114-780-753
+2025-06-08 04:34:20,897 - __main__ - INFO - База данных инициализирована
+2025-06-08 04:34:20,897 - __main__ - INFO - Запуск сервера Flask...
+2025-06-08 04:34:20,925 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.46:5000
+2025-06-08 04:34:20,925 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-08 04:34:20,930 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 04:34:21,420 - __main__ - INFO - База данных инициализирована
+2025-06-08 04:34:21,421 - __main__ - INFO - Запуск сервера Flask...
+2025-06-08 04:34:21,433 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 04:34:21,439 - werkzeug - INFO -  * Debugger PIN: 114-780-753
+2025-06-08 04:34:25,096 - __main__ - DEBUG - Начало обработки запроса /
+2025-06-08 04:34:25,097 - __main__ - DEBUG - Получение сообщений из БД
+2025-06-08 04:34:25,129 - __main__ - DEBUG - Найдено 50 сообщений
+2025-06-08 04:34:25,129 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,131 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,131 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,131 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,131 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,132 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,132 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,132 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,132 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,132 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,133 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,133 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,133 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,133 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,134 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,134 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,134 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,134 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,135 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,135 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,135 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,136 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,136 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,137 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,137 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,137 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,138 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,138 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,138 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,139 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,141 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,143 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,143 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,144 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,144 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,145 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,145 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,145 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,146 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,146 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,147 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,147 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,147 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,147 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,148 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,148 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,148 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,148 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,150 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,150 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:34:25,150 - __main__ - DEBUG - Успешно обработано 0 сообщений
+2025-06-08 04:34:25,286 - __main__ - DEBUG - Закрыто соединение с БД
+2025-06-08 04:34:25,287 - werkzeug - INFO - 127.0.0.1 - - [08/Jun/2025 04:34:25] "GET / HTTP/1.1" 200 -
+2025-06-08 04:36:18,734 - werkzeug - INFO -  * Detected change in 'C:\\project\\gem_sum\\project_sum\\app.py', reloading
+2025-06-08 04:36:18,811 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 04:36:19,391 - __main__ - INFO - База данных инициализирована
+2025-06-08 04:36:19,391 - __main__ - INFO - Запуск сервера Flask...
+2025-06-08 04:36:19,411 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 04:36:19,411 - werkzeug - INFO -  * Debugger PIN: 114-780-753
+2025-06-08 04:36:23,989 - __main__ - INFO - База данных инициализирована
+2025-06-08 04:36:23,989 - __main__ - INFO - Запуск сервера Flask...
+2025-06-08 04:36:24,019 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.46:5000
+2025-06-08 04:36:24,020 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-08 04:36:24,021 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 04:36:24,504 - __main__ - INFO - База данных инициализирована
+2025-06-08 04:36:24,504 - __main__ - INFO - Запуск сервера Flask...
+2025-06-08 04:36:24,518 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 04:36:24,526 - werkzeug - INFO -  * Debugger PIN: 114-780-753
+2025-06-08 04:36:27,780 - __main__ - DEBUG - Начало обработки запроса /
+2025-06-08 04:36:27,781 - __main__ - DEBUG - Получение сообщений из БД
+2025-06-08 04:36:27,811 - __main__ - DEBUG - Найдено 50 сообщений
+2025-06-08 04:36:27,811 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,812 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,812 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,812 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,813 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,813 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,813 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,813 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,814 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,814 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,815 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,815 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,815 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,816 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,816 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,817 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,817 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,817 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,817 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,818 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,818 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,818 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,818 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,818 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,818 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,818 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,818 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,818 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,820 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,820 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,820 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,820 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,820 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,820 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,821 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,821 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,821 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,821 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,822 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,822 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,822 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,822 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,822 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,823 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,823 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,823 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,823 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,823 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,823 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,823 - __main__ - ERROR - Ошибка обработки сообщения: 'str' object has no attribute 'isoformat'
+2025-06-08 04:36:27,823 - __main__ - DEBUG - Успешно обработано 0 сообщений
+2025-06-08 04:36:27,832 - __main__ - DEBUG - Закрыто соединение с БД
+2025-06-08 04:36:27,833 - werkzeug - INFO - 127.0.0.1 - - [08/Jun/2025 04:36:27] "GET / HTTP/1.1" 200 -
+2025-06-08 04:46:24,673 - __main__ - INFO - Таблицы базы данных созданы
+2025-06-08 04:46:24,673 - __main__ - INFO - Сервер запущен на http://127.0.0.1:5000
+2025-06-08 04:46:24,701 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-08 04:46:24,701 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-06-08 04:46:24,708 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 04:46:25,239 - __main__ - INFO - Таблицы базы данных созданы
+2025-06-08 04:46:25,241 - __main__ - INFO - Сервер запущен на http://127.0.0.1:5000
+2025-06-08 04:46:25,259 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 04:46:25,261 - werkzeug - INFO -  * Debugger PIN: 114-780-753
+2025-06-08 04:46:30,101 - werkzeug - INFO - 127.0.0.1 - - [08/Jun/2025 04:46:30] "GET / HTTP/1.1" 200 -

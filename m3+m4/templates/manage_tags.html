@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Управление тегами с фильтром и сортировкой</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+
+  <div class="max-w-4xl mx-auto">
+
+    <h1 class="text-3xl font-bold mb-6 text-center">Управление тегами</h1>
+  <!-- Кнопка "Назад" -->
+<button id="backBtn" onclick="window.location.href='/'" 
+    class="mb-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-5 rounded shadow-lg transition">
+    ← Назад
+</button>
+
+<!-- Плавающая кнопка "На главную" -->
+<a id="homeBtn" href="/" 
+   class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-5 rounded shadow-lg transition z-50 hidden">
+   На главную
+</a>
+
+    <!-- Фильтр и сортировка -->
+    <div class="mb-6 flex flex-wrap items-center space-x-4 space-y-2">
+      <label for="minCount" class="font-semibold">Показать теги с количеством сообщений от:</label>
+      <input id="minCount" type="number" min="0" value="0" class="border rounded px-3 py-1 w-24" />
+
+      <label for="sortOrder" class="font-semibold">Сортировать по количеству:</label>
+      <select id="sortOrder" class="border rounded px-3 py-1">
+        <option value="desc" selected>По убыванию</option>
+        <option value="asc">По возрастанию</option>
+      </select>
+    </div>
+
+    <div class="space-y-4" id="tagsContainer">
+      {% for tag, count in tags.items() %}
+      <div class="bg-white shadow rounded-lg p-4 flex justify-between items-center tag-card" data-count="{{ count }}" data-tag="{{ tag }}">
+        <div>
+          <span class="font-semibold text-lg lowercase">#{{ tag }}</span>
+          <span class="ml-3 text-gray-600">Сообщений: {{ count }}</span>
+        </div>
+
+        <div class="space-x-4">
+          <a href="#" 
+             class="text-blue-600 hover:underline edit-tag" 
+             data-tag="{{ tag }}">Редактировать</a>
+          
+          {% if count == 0 %}
+          <a href="#" 
+             class="text-red-600 hover:underline delete-tag" 
+             data-tag="{{ tag }}">Удалить</a>
+          {% else %}
+          <span class="text-gray-400 cursor-not-allowed select-none" title="Удаление недоступно, т.к. есть сообщения">Удалить</span>
+          {% endif %}
+        </div>
+      </div>
+      {% else %}
+      <p class="text-center text-gray-500">Нет тегов для отображения</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+    const minCountInput = document.getElementById('minCount');
+    const sortOrderSelect = document.getElementById('sortOrder');
+    const tagsContainer = document.getElementById('tagsContainer');
+
+    function filterAndSortTags() {
+  const minCount = Number(minCountInput.value);
+  const sortOrder = sortOrderSelect.value;
+
+  // Получаем все карточки тегов
+  const tagCards = Array.from(document.querySelectorAll('.tag-card'));
+
+  // Фильтруем карточки по количеству сообщений
+  tagCards.forEach(card => {
+    const count = Number(card.dataset.count);
+    if (count >= minCount) {
+      card.style.display = ''; // показываем
+    } else {
+      card.style.display = 'none'; // скрываем
+    }
+  });
+
+  // Сортируем карточки по количеству сообщений (только видимые)
+  // Сначала создаём массив видимых карточек
+  const visibleCards = tagCards.filter(card => card.style.display !== 'none');
+
+  // Сортируем видимые карточки
+  visibleCards.sort((a, b) => {
+    const countA = Number(a.dataset.count);
+    const countB = Number(b.dataset.count);
+    return sortOrder === 'asc' ? countA - countB : countB - countA;
+  });
+
+  // Перемещаем отсортированные карточки в контейнер в нужном порядке
+  visibleCards.forEach(card => tagsContainer.appendChild(card));
+}
+
+minCountInput.addEventListener('input', filterAndSortTags);
+sortOrderSelect.addEventListener('change', filterAndSortTags);
+
+// Инициализация при загрузке страницы
+filterAndSortTags();
+
+
+    minCountInput.addEventListener('input', filterAndSortTags);
+    sortOrderSelect.addEventListener('change', filterAndSortTags);
+
+    // Запуск фильтрации и сортировки при загрузке страницы
+    window.addEventListener('DOMContentLoaded', filterAndSortTags);
+
+    // Редактирование тега
+    document.querySelectorAll('.edit-tag').forEach(el => {
+      el.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const oldTag = e.target.dataset.tag;
+        const newTag = prompt(`Изменить тег "${oldTag}" на:`);
+        if (newTag && newTag.trim() !== '' && newTag !== oldTag) {
+          try {
+            const resp = await fetch('/api/tags/edit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ old_tag: oldTag, new_tag: newTag.trim().toLowerCase() })
+            });
+            const result = await resp.json();
+            if (resp.ok && result.success) {
+              alert(`Тег "${oldTag}" изменён на "${newTag.trim()}"`);
+              location.reload();
+            } else {
+              alert(result.error || 'Ошибка при изменении тега');
+            }
+          } catch (err) {
+            alert('Ошибка сети или сервера');
+            console.error(err);
+          }
+        }
+      });
+    });
+
+    // Удаление тега
+    document.querySelectorAll('.delete-tag').forEach(el => {
+      el.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const tag = e.target.dataset.tag;
+        if (confirm(`Удалить тег "${tag}"? Это действие нельзя отменить.`)) {
+          try {
+            const resp = await fetch('/api/tags/delete', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ tag })
+            });
+            const result = await resp.json();
+            if (resp.ok && result.success) {
+              alert(`Тег "${tag}" удалён`);
+              location.reload();
+            } else {
+              alert(result.error || 'Ошибка при удалении тега');
+            }
+          } catch (err) {
+            alert('Ошибка сети или сервера');
+            console.error(err);
+          }
+        }
+      });
+    });
+      const backBtn = document.getElementById('backBtn');
+  const homeBtn = document.getElementById('homeBtn');
+
+  // Настраиваем Intersection Observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Кнопка "Назад" видна — скрываем кнопку "На главную"
+        homeBtn.classList.add('hidden');
+      } else {
+        // Кнопка "Назад" не видна — показываем кнопку "На главную"
+        homeBtn.classList.remove('hidden');
+      }
+    });
+  }, {
+    root: null, // viewport
+    threshold: 0 // любое пересечение с viewport
+  });
+
+  observer.observe(backBtn);
+  </script>
+
+</body>
+</html>

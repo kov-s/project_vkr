@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Архив сообщений</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <input type="file" id="csvInput" accept=".csv" class="mb-4">
+<div id="filters" class="mb-4 flex flex-wrap gap-2"></div>
+<div id="messages" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
+
+  <div class="max-w-6xl mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-6">📚 Архив сообщений</h1>
+
+    <!-- 🔍 Фильтр -->
+    <div class="flex flex-wrap items-center gap-4 mb-6">
+      <select id="tagFilter" class="border rounded p-2">
+        <option value="">Все теги</option>
+      </select>
+      <input type="date" id="dateFrom" class="border rounded p-2">
+      <input type="date" id="dateTo" class="border rounded p-2">
+      <button onclick="applyFilters()" class="bg-blue-500 text-white px-4 py-2 rounded">Фильтровать</button>
+    </div>
+
+    <!-- 📦 Контейнер карточек -->
+    <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  </div>
+
+  <!-- 🪟 Modal добавления тега -->
+  <div id="tagModal" class="fixed inset-0 bg-black bg-opacity-40 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-80">
+      <h2 class="text-xl font-bold mb-4">Добавить тег</h2>
+      <input id="newTagInput" type="text" class="w-full border p-2 rounded mb-4" placeholder="Новый тег..." />
+      <div class="flex justify-end gap-2">
+        <button onclick="closeModal()" class="text-gray-500">Отмена</button>
+        <button onclick="submitTag()" class="bg-blue-500 text-white px-4 py-2 rounded">Добавить</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentMessageIndex = null;
+
+    let messages = {{ messages | tojson }};
+
+    
+    function createCard(msg, index) {
+  return `
+    <div class="bg-white rounded-lg shadow-md p-4 relative">
+      <div class="text-sm text-gray-500 mb-2">${msg.date}</div>
+      <p class="whitespace-pre-line mb-2">${msg.message}</p>
+      ${msg.media_url ? `<img src="${msg.media_url}" class="rounded mt-2 max-h-48 w-full object-cover">` : ""}
+      <div class="flex flex-wrap gap-2 mt-4 text-sm items-center">
+        ${msg.predicted_tags.map((tag, tagIndex) => `
+          <span class="bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
+            ${tag}
+            ${msg.predicted_tags.length > 1 
+              ? `<button onclick="removeTag(${index}, ${tagIndex})" class="text-red-500 hover:text-red-700 text-xs font-bold">&times;</button>` 
+              : ''}
+          </span>
+        `).join('')}
+        <button onclick="openModal(${index})" class="text-blue-600 underline text-xs">+ добавить тег</button>
+      </div>
+    </div>
+  `;
+}
+
+function removeTag(messageIndex, tagIndex) {
+  messages[messageIndex].predicted_tags.splice(tagIndex, 1);
+  applyFilters();  // пересчитываем карточки и фильтры
+}
+
+    function renderCards(data) {
+      const container = document.getElementById('cardsContainer');
+      container.innerHTML = data.map(createCard).join('');
+    }
+
+    function populateTags() {
+      const allTags = new Set();
+      messages.forEach(m => m.predicted_tags.forEach(tag => allTags.add(tag)));
+      const select = document.getElementById('tagFilter');
+      select.innerHTML = '<option value="">Все теги</option>';
+      [...allTags].sort().forEach(tag => {
+        const option = document.createElement('option');
+        option.value = tag;
+        option.textContent = tag;
+        select.appendChild(option);
+      });
+    }
+
+    function applyFilters() {
+      const tag = document.getElementById('tagFilter').value;
+      const dateFrom = document.getElementById('dateFrom').value;
+      const dateTo = document.getElementById('dateTo').value;
+
+      const filtered = messages.filter(msg => {
+        const okTag = !tag || msg.predicted_tags.includes(tag);
+        const okDate = (!dateFrom || msg.date >= dateFrom) && (!dateTo || msg.date <= dateTo);
+        return okTag && okDate;
+      });
+
+      renderCards(filtered);
+    }
+
+    function openModal(index) {
+      currentMessageIndex = index;
+      document.getElementById('newTagInput').value = '';
+      document.getElementById('tagModal').classList.remove('hidden');
+      document.getElementById('tagModal').classList.add('flex');
+    }
+
+    function closeModal() {
+      document.getElementById('tagModal').classList.add('hidden');
+      document.getElementById('tagModal').classList.remove('flex');
+    }
+
+    function submitTag() {
+      const newTag = document.getElementById('newTagInput').value.trim();
+      if (newTag && !messages[currentMessageIndex].predicted_tags.includes(newTag)) {
+        messages[currentMessageIndex].predicted_tags.push(newTag);
+        populateTags();
+        applyFilters();
+      }
+      closeModal();
+    }
+
+    // Инициализация
+    window.onload = () => {
+      renderCards(messages);
+      populateTags();
+    };
+
+document.getElementById('csvInput').addEventListener('change', function (e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  Papa.parse(file, {
+    header: true,
+    skipEmptyLines: true,
+    complete: function (results) {
+      messages = results.data.map((row) => ({
+        date: row.date,
+        message: row.message,
+        media_url: row.media_url,
+        predicted_tags: JSON.parse(row.predicted_tags.replace(/'/g, '"'))
+      }));
+      applyFilters();
+    }
+  });
+});
+
+
+  </script>
+</body>
+</html>

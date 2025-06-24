@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Архив сообщений</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 p-4">
+
+  <h1 class="text-2xl font-bold mb-4">Анализ тем с BERTopic</h1>
+
+  <div class="flex flex-wrap gap-4 mb-6 items-center">
+    <!-- Фильтры -->
+    <select id="tagFilter" class="border rounded p-2" onchange="applyFilters()">
+      <option value="">Все теги</option>
+    </select>
+    <select id="topicFilter" class="border rounded p-2" onchange="applyFilters()">
+      <option value="">Все темы</option>
+      {% for topic in all_topics %}
+        <option value="{{ topic }}">{{ topic }}</option>
+      {% endfor %}
+    </select>
+    <input type="number" step="0.01" min="0" max="1" id="probabilityMin" lang="en" inputmode="decimal" placeholder="min вероятность" class="border p-2 rounded w-32">
+    <input type="number" step="0.01" min="0" max="1" id="probabilityMax" lang="en" inputmode="decimal" placeholder="max вероятность" class="border p-2 rounded w-32">
+    <button onclick="applyFilters()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Фильтровать</button>
+    <button id="togglePaginationBtn" onclick="togglePagination()" class="text-white px-4 py-2 rounded">Пагинация</button>
+    <a href="/manage_tags" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Управление тегами</a>
+    <button id="summaryBtn" onclick="openSummaryModalForCurrentTopic()" class="bg-purple-600 text-white px-4 py-2 rounded hidden ml-auto">Обобщить</button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="cardsContainer"></div>
+  <div id="paginationControls" class="flex flex-wrap gap-2 justify-center mt-6"></div>
+
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-lg max-w-2xl w-full relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-600 text-2xl font-bold">&times;</button>
+      <div id="modalContent" class="mt-8"></div>
+    </div>
+  </div>
+
+  <div id="summaryModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-auto"">
+      <button onclick="closeSummaryModal()" class="absolute top-2 right-2 text-gray-600 text-2xl font-bold">&times;</button>
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Обобщение по теме: <span id="summaryTopicTitle"></span></h2>
+        <button id="doSummarizeBtn" class="bg-purple-600 text-white px-1 py-1 right-2 hover:bg-purple-700" onclick="sendForSummarization()">Суммировать</button>
+        <button class="bg-purple-600 text-white px-2 py-1  right-2 rounded hover:bg-purple-700" onclick="closeSummaryModal()">×</button>
+
+      </div>
+      <div id="loadingSpinner" class="hidden w-full text-center my-4">
+        <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <p class="mt-2 text-gray-500 text-sm">Суммирование...</p>
+      </div>
+      <pre id="summaryText" class="whitespace-pre-wrap max-h-[60vh] overflow-y-auto"></pre>
+      <div class="mt-4 flex justify-end">
+        <button onclick="saveCombinedMessageAsText()" class="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600">Сохранить как TXT</button>
+        <button onclick="saveCombinedMessageAsJson()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Сохранить как JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Глобальное состояние ---
+    let messages = {{ messages | tojson | safe }};
+    let filtered = [...messages];
+    let currentTopic = "";
+    let combinedMessageGlobal = "";
+    let paginationEnabled = false;
+    let currentPage = 1;
+    const itemsPerPage = 9;
+
+    // --- Уведомления ---
+    function showNotification(message, type = 'success') {
+      const notif = document.createElement('div');
+      notif.className = `fixed top-4 right-4 px-4 py-2 rounded shadow z-50 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white`;
+      notif.textContent = message;
+      document.body.appendChild(notif);
+      setTimeout(() => notif.remove(), 2500);
+    }
+
+    // --- Отрисовка карточек ---
+    function renderCards(data) {
+      const container = document.getElementById("cardsContainer");
+      container.innerHTML = data.map((msg, indexInFiltered) => {
+        const originalIndex = messages.findIndex(m => m.id === msg.id);
+        return `
+          <div class="bg-white p-4 rounded shadow relative">
+            <div class="absolute top-2 right-2 text-xs text-gray-400">ID: ${msg.id}</div>
+            <div class="text-sm text-gray-500 mb-1">${new Date(msg.date).toLocaleString()}</div>
+            <div class="mb-2">${msg.message.slice(0, 150)}${msg.message.length > 150 ? "..." : ""}</div>
+            <div class="flex flex-wrap gap-2 text-sm mb-2">
+              ${msg.predicted_tags.map(tag =>
+                `<span class="bg-green-100 px-2 py-1 rounded inline-flex items-center">
+                  ${tag}
+                  <button onclick="removeTag(${originalIndex}, '${tag}')" class="text-red-500 ml-1 font-bold hover:text-red-700">&times;</button>
+                </span>`
+              ).join('')}
+            </div>
+            <input type="text" placeholder="Добавить тег" id="tagInput-${originalIndex}" class="border rounded px-2 py-1 text-sm w-1/2 mr-2">
+            <button onclick="addTag(${originalIndex})" class="text-sm bg-green-500 text-white px-2 py-1 rounded">Добавить</button>
+            <div class="text-xs text-gray-500 mt-2">Тема: <span class="font-semibold">${msg.topic_name}</span>, Вероятность: ${msg.topic_probability.toFixed(2)}</div>
+            <div class="text-xs text-gray-500 mt-2">
+              <button onclick="showModal(${indexInFiltered})" class="absolute bottom-2 right-2 text-blue-600 text-sm underline">Показать полностью</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- Добавление и удаление тегов ---
+    async function addTag(originalIndex) {
+      const input = document.getElementById(`tagInput-${originalIndex}`);
+      const newTag = input.value.trim();
+      if (!newTag) return;
+      const msgId = messages[originalIndex].id;
+      const msg = messages.find(m => m.id === msgId);
+      if (!msg || msg.predicted_tags.includes(newTag)) return;
+      msg.predicted_tags.push(newTag);
+      updateTagFilter(newTag);
+      await saveMessageToServer(msg);
+      input.value = '';
+      applyFilters();
+      showNotification('Тег добавлен!');
+    }
+
+    async function removeTag(originalIndex, tagToRemove) {
+      const msgId = messages[originalIndex].id;
+      const msg = messages.find(m => m.id === msgId);
+      if (!msg) return;
+      msg.predicted_tags = msg.predicted_tags.filter(t => t !== tagToRemove);
+      await saveMessageToServer(msg);
+      applyFilters();
+      showNotification('Тег удалён!');
+    }
+
+    function updateTagFilter(newTag) {
+      const tagFilter = document.getElementById("tagFilter");
+      const exists = Array.from(tagFilter.options).some(option => option.value === newTag);
+      if (!exists) {
+        const option = document.createElement("option");
+        option.value = newTag;
+        option.textContent = newTag;
+        tagFilter.appendChild(option);
+      }
+    }
+
+    function populateTagFilter() {
+      const tagFilter = document.getElementById("tagFilter");
+      const existingTags = new Set(Array.from(tagFilter.options).map(option => option.value));
+      messages.forEach(msg => {
+        msg.predicted_tags.forEach(tag => {
+          if (tag && !existingTags.has(tag)) {
+            const option = document.createElement("option");
+            option.value = tag;
+            option.textContent = tag;
+            tagFilter.appendChild(option);
+            existingTags.add(tag);
+          }
+        });
+      });
+    }
+
+    async function saveMessageToServer(messageData) {
+      try {
+        const response = await fetch('/update_message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(messageData),
+        });
+        if (!response.ok) {
+          showNotification('Ошибка при сохранении сообщения на сервере.', 'error');
+        }
+      } catch (error) {
+        showNotification('Ошибка сети при попытке сохранить сообщение.', 'error');
+      }
+    }
+
+    // --- Модальные окна ---
+    function showModal(indexInFiltered) {
+      const msg = filtered[indexInFiltered];
+      if (!msg) return;
+      let mediaContent = '';
+      if (msg.media_url) {
+        const urls = msg.media_url.split(/[,;]/).map(s => s.trim()).filter(Boolean);
+        urls.forEach(url => {
+          if (url.toLowerCase().endsWith('.mp4')) {
+            mediaContent += `<video controls class="mt-4 max-w-full rounded"><source src="${url}" type="video/mp4"></video>`;
+          } else {
+            mediaContent += `<img src="${url}" class="mt-4 max-w-full rounded" />`;
+          }
+        });
+      }
+      document.getElementById("modalContent").innerHTML = `
+        <h2 class="text-xl font-bold mb-2">Полное сообщение</h2>
+        <p class="mb-4 whitespace-pre-line">${msg.message}</p>
+        ${mediaContent}
+      `;
+      const modal = document.getElementById("modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    // --- Фильтрация ---
+    function applyFilters() {
+      const tag = document.getElementById("tagFilter").value;
+      currentTopic = document.getElementById("topicFilter").value;
+      const probMinInput = document.getElementById("probabilityMin");
+      const probMaxInput = document.getElementById("probabilityMax");
+      const probMin = probMinInput ? parseFloat(probMinInput.value.replace(',', '.')) : NaN;
+      const probMax = probMaxInput ? parseFloat(probMaxInput.value.replace(',', '.')) : NaN;
+      filtered = messages.filter(msg => {
+        const matchTag = !tag || msg.predicted_tags.includes(tag);
+        const matchTopic = !currentTopic || String(msg.topic_name) === currentTopic;
+        const matchProb = (isNaN(probMin) || msg.topic_probability >= probMin) &&
+                          (isNaN(probMax) || msg.topic_probability <= probMax);
+        return matchTag && matchTopic && matchProb;
+      });
+      currentPage = 1;
+      renderFilteredView();
+      updateSummaryButton();
+    }
+
+    // --- Обобщение ---
+    function updateSummaryButton() {
+      const btn = document.getElementById("summaryBtn");
+      if (currentTopic && currentTopic !== "") {
+        btn.classList.remove("hidden");
+      } else {
+        btn.classList.add("hidden");
+      }
+    }
+
+    function openSummaryModalForCurrentTopic() {
+      if (!currentTopic) return;
+      const msgs = filtered.filter(m => String(m.topic_name) === currentTopic);
+      combinedMessageGlobal = msgs.map(m => `- ${m.message}`).join("\n\n");
+      document.getElementById("summaryTopicTitle").textContent = currentTopic;
+      document.getElementById("summaryText").textContent = combinedMessageGlobal || "Нет сообщений для этой темы.";
+      const summaryModal = document.getElementById("summaryModal");
+      summaryModal.classList.remove("hidden");
+      summaryModal.classList.add("flex");
+    }
+
+    function closeSummaryModal() {
+      const summaryModal = document.getElementById("summaryModal");
+      summaryModal.classList.add("hidden");
+      summaryModal.classList.remove("flex");
+    }
+
+    async function sendForSummarization() {
+      const summaryTextElement = document.getElementById("summaryText");
+      if (!summaryTextElement) { showNotification('Не найден элемент summaryText.', 'error'); return; }
+      const combinedText = summaryTextElement.textContent.trim();
+      if (!combinedText) {
+        showNotification('Нет текста для суммирования.', 'error');
+        return;
+      }
+      if (!currentTopic) {
+        showNotification('Не выбрана тема для суммирования.', 'error');
+        return;
+      }
+      const btn = document.getElementById("doSummarizeBtn");
+      const spinner = document.getElementById("loadingSpinner");
+      btn.disabled = true;
+      btn.classList.add("hidden");
+      spinner.classList.remove("hidden");
+      try {
+        const response = await fetch('/summarize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: combinedText, topic: currentTopic }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.summary) {
+            localStorage.setItem('finalSummaryText', data.summary);
+            window.location.href = '/summary_result?topic=' + encodeURIComponent(currentTopic);
+          } else {
+            showNotification('Ошибка: сервер не вернул результат суммирования.', 'error');
+          }
+        } else {
+          const errorText = await response.text();
+          showNotification(`Ошибка при суммировании: ${response.status} - ${errorText}`, 'error');
+        }
+      } catch (error) {
+        showNotification('Произошла ошибка при отправке запроса на суммирование.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove("hidden");
+        spinner.classList.add("hidden");
+      }
+    }
+
+    // --- Сохранение ---
+    function downloadData(filename, data, type) {
+      const blob = new Blob([data], { type: type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function saveCombinedMessageAsText() {
+      if (!combinedMessageGlobal) {
+        showNotification("Нет текста для сохранения.", 'error');
+        return;
+      }
+      const filename = `обобщение_${currentTopic.replace(/[^a-z0-9]/gi, '_')}.txt`;
+      downloadData(filename, combinedMessageGlobal, 'text/plain');
+    }
+
+    function saveCombinedMessageAsJson() {
+      if (!combinedMessageGlobal) {
+        showNotification("Нет текста для сохранения.", 'error');
+        return;
+      }
+      const dataToSave = {
+        topic: currentTopic,
+        message: combinedMessageGlobal,
+        timestamp: new Date().toISOString()
+      };
+      const filename = `обобщение_${currentTopic.replace(/[^a-z0-9]/gi, '_')}.json`;
+      downloadData(filename, JSON.stringify(dataToSave, null, 2), 'application/json');
+    }
+
+    // --- Пагинация ---
+    function paginate(array, page, perPage) {
+      const start = (page - 1) * perPage;
+      return array.slice(start, start + perPage);
+    }
+
+    function renderPaginationControls(totalItems) {
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      const paginationContainer = document.getElementById("paginationControls");
+      if (!paginationContainer) return;
+      if (totalPages <= 1) {
+        paginationContainer.innerHTML = '';
+        return;
+      }
+      let html = '';
+      const prevDisabled = currentPage === 1;
+      html += `
+        <button onclick="changePage(${currentPage - 1})" class="px-4 py-2 mx-1 text-gray-700 capitalize bg-white rounded-md ${prevDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}" ${prevDisabled ? 'disabled' : ''}>
+          <div class="flex items-center -mx-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-1 rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+            </svg>
+            <span class="mx-1">Назад</span>
+          </div>
+        </button>
+      `;
+      for (let i = 1; i <= totalPages; i++) {
+        const isActive = i === currentPage;
+        html += `
+          <button onclick="changePage(${i})" class="px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-blue-500 hover:text-white'}">
+            ${i}
+          </button>
+        `;
+      }
+      const nextDisabled = currentPage === totalPages;
+      html += `
+        <button onclick="changePage(${currentPage + 1})" class="px-4 py-2 mx-1 text-gray-700 capitalize bg-white rounded-md ${nextDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}" ${nextDisabled ? 'disabled' : ''}>
+          <div class="flex items-center -mx-1">
+            <span class="mx-1">Вперед</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-1 rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </div>
+        </button>
+      `;
+      paginationContainer.innerHTML = html;
+    }
+
+    function changePage(newPage) {
+      const totalPages = Math.ceil(filtered.length / itemsPerPage);
+      if (newPage < 1 || newPage > totalPages) return;
+      currentPage = newPage;
+      renderFilteredView();
+    }
+
+    function togglePagination() {
+      if (filtered.length <= itemsPerPage) return;
+      paginationEnabled = !paginationEnabled;
+      currentPage = 1;
+      renderFilteredView();
+    }
+
+    function updatePaginationButtonState() {
+      const btn = document.getElementById("togglePaginationBtn");
+      if (!btn) return;
+      if (filtered.length <= itemsPerPage) {
+        btn.disabled = true;
+        btn.textContent = "Пагинация";
+        btn.className = "text-white px-4 py-2 rounded bg-gray-400 cursor-not-allowed";
+        paginationEnabled = false;
+      } else {
+        btn.disabled = false;
+        if (paginationEnabled) {
+          btn.textContent = "Пагинация: Вкл";
+          btn.className = "text-white px-4 py-2 rounded bg-green-500 hover:bg-green-600";
+        } else {
+          btn.textContent = "Пагинация: Выкл";
+          btn.className = "text-white px-4 py-2 rounded bg-red-500 hover:bg-red-600";
+        }
+      }
+    }
+
+    function renderFilteredView() {
+      updatePaginationButtonState();
+      const paginationContainer = document.getElementById("paginationControls");
+      if (paginationEnabled && filtered.length > itemsPerPage) {
+        const paginatedData = paginate(filtered, currentPage, itemsPerPage);
+        renderCards(paginatedData);
+        renderPaginationControls(filtered.length);
+      } else {
+        renderCards(filtered);
+        if (paginationContainer) {
+          paginationContainer.innerHTML = '';
+        }
+      }
+    }
+
+    // --- Инициализация ---
+    document.addEventListener("DOMContentLoaded", () => {
+      populateTagFilter();
+      applyFilters();
+    });
+  </script>
+</body>
+</html>

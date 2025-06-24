@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Архив сообщений</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 p-4">
+
+  <h1 class="text-2xl font-bold mb-4">Анализ тем с BERTopic</h1>
+
+  <!-- Фильтры -->
+  <div class="flex flex-wrap gap-4 mb-6 items-center">
+    <select id="tagFilter" class="border rounded p-2">
+      <option value="">Все теги</option>
+      {% for tag in all_tags %}
+        <option value="{{ tag }}">{{ tag }}</option>
+      {% endfor %}
+    </select>
+
+    <select id="topicFilter" class="border rounded p-2" onchange="applyFilters()">
+      <option value="">Все темы</option>
+      {% for topic in all_topics %}
+        <option value="{{ topic }}">{{ topic }}</option>
+      {% endfor %}
+    </select>
+
+    <input type="number" step="0.01" min="0" max="1" id="probabilityMin" placeholder="min вероятность" class="border p-2 rounded w-32">
+    <input type="number" step="0.01" min="0" max="1" id="probabilityMax" placeholder="max вероятность" class="border p-2 rounded w-32">
+    <button onclick="applyFilters()" class="bg-blue-500 text-white px-4 py-2 rounded">Фильтровать</button>
+
+    <button id="summaryBtn" onclick="showSummary()" class="bg-purple-600 text-white px-4 py-2 rounded hidden ml-auto">Обобщить</button>
+  </div>
+
+  <!-- Карточки -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="cardsContainer"></div>
+
+  <!-- Модальное окно -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-70 hidden justify-center items-center z-50 overflow-auto">
+    <div class="bg-white p-6 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto relative">
+      <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-600 text-2xl font-bold">&times;</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const messages = {{ messages | tojson | safe }};
+    let filtered = [...messages];
+    let currentTopic = "";
+
+    function renderCards(data) {
+      const container = document.getElementById("cardsContainer");
+      container.innerHTML = data.map((msg, index) => `
+        <div class="bg-white p-4 rounded shadow relative">
+          <div class="absolute top-2 right-2 text-xs text-gray-400">ID: ${msg.id}</div>
+          <div class="text-sm text-gray-500 mb-1">${msg.date}</div>
+          <div class="mb-2">${msg.message.slice(0, 150)}${msg.message.length > 150 ? "..." : ""}</div>
+
+          <div class="flex flex-wrap gap-2 text-sm mb-2">
+            ${msg.predicted_tags.map(tag =>
+              `<span class="bg-green-100 px-2 py-1 rounded inline-flex items-center">
+                ${tag}
+                <button onclick="removeTag(${index}, '${tag}')" class="text-red-500 ml-1 font-bold hover:text-red-700">&times;</button>
+              </span>`
+            ).join('')}
+          </div>
+
+          <input type="text" placeholder="Добавить тег" id="tagInput-${index}" class="border rounded px-2 py-1 text-sm w-1/2 mr-2">
+          <button onclick="addTag(${index})" class="text-sm bg-green-500 text-white px-2 py-1 rounded">Добавить</button>
+
+          <div class="text-xs text-gray-500 mt-2">Тема: ${msg.topic}, Вероятность: ${msg.topic_probability.toFixed(2)}</div>
+
+          <button onclick="showModal(${index})" class="absolute bottom-2 right-2 text-blue-600 text-sm underline">Показать полностью</button>
+        </div>
+      `).join('');
+    }
+
+    function showModal(index) {
+      const msg = filtered[index];
+      if (!msg) return;
+
+      let mediaContent = '';
+      if (msg.media_url) {
+        // Поддержка разделителя "," или ";"
+        const urls = msg.media_url.split(/[,;]/).map(s => s.trim()).filter(Boolean);
+
+        urls.forEach(url => {
+          if (url.toLowerCase().endsWith('.mp4')) {
+            mediaContent += `<video controls class="mt-4 max-w-full rounded"><source src="${url}" type="video/mp4"></video>`;
+          } else {
+            mediaContent += `<img src="${url}" class="mt-4 max-w-full rounded" />`;
+          }
+        });
+      }
+
+      document.getElementById("modalContent").innerHTML = `
+        <h2 class="text-xl font-bold mb-2">Полное сообщение</h2>
+        <p class="mb-4 whitespace-pre-line">${msg.message}</p>
+        ${mediaContent}
+      `;
+
+      const modal = document.getElementById("modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function applyFilters() {
+      const tag = document.getElementById("tagFilter").value;
+      currentTopic = document.getElementById("topicFilter").value;
+      const probMin = parseFloat(document.getElementById("probabilityMin").value);
+      const probMax = parseFloat(document.getElementById("probabilityMax").value);
+
+      filtered = messages.filter(msg => {
+        const matchTag = !tag || msg.predicted_tags.includes(tag);
+        const matchTopic = !currentTopic || String(msg.topic) === currentTopic;
+        const matchProb = (isNaN(probMin) || msg.topic_probability >= probMin) &&
+                          (isNaN(probMax) || msg.topic_probability <= probMax);
+        return matchTag && matchTopic && matchProb;
+      });
+
+      renderCards(filtered);
+      updateSummaryButton();
+    }
+
+    function updateSummaryButton() {
+      const btn = document.getElementById("summaryBtn");
+      if (currentTopic && currentTopic !== "") {
+        btn.classList.remove("hidden");
+      } else {
+        btn.classList.add("hidden");
+      }
+    }
+
+    function showSummary() {
+      if (!currentTopic) return;
+
+      const msgs = filtered.filter(m => String(m.topic) === currentTopic);
+      const combinedMessage = msgs.map(m => `- ${m.message}`).join("\n\n");
+
+      document.getElementById("modalContent").innerHTML = `
+        <h2 class="text-xl font-bold mb-4">Обобщение по теме ${currentTopic}</h2>
+        <p class="whitespace-pre-line">${combinedMessage || "Нет сообщений для этой темы."}</p>
+      `;
+      const modal = document.getElementById("modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function addTag(index) {
+      const input = document.getElementById(`tagInput-${index}`);
+      const newTag = input.value.trim();
+      if (newTag && !filtered[index].predicted_tags.includes(newTag)) {
+        filtered[index].predicted_tags.push(newTag);
+        input.value = '';
+        renderCards(filtered);
+      }
+    }
+
+    function removeTag(index, tag) {
+      filtered[index].predicted_tags = filtered[index].predicted_tags.filter(t => t !== tag);
+      renderCards(filtered);
+    }
+
+    // Инициализация
+    renderCards(messages);
+    updateSummaryButton();
+  </script>
+
+</body>
+</html>

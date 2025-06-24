@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Архив сообщений</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 p-4">
+
+  <h1 class="text-2xl font-bold mb-4">Анализ тем с BERTopic</h1>
+
+ <div class="flex flex-wrap gap-4 mb-6 items-center">
+    <!-- Фильтры -->
+    <select id="tagFilter" class="border rounded p-2" onchange="applyFilters()">
+      <option value="">Все теги</option>
+    </select>
+    <select id="topicFilter" class="border rounded p-2" onchange="applyFilters()">
+        <option value="">Все темы</option>
+        {% for topic in all_topics %}
+            <option value="{{ topic }}">{{ topic }}</option>
+        {% endfor %}
+    </select>
+    <input type="number" step="0.01" min="0" max="1" id="probabilityMin" lang="en" inputmode="decimal" placeholder="min вероятность" class="border p-2 rounded w-32">
+    <input type="number" step="0.01" min="0" max="1" id="probabilityMax" lang="en" inputmode="decimal" placeholder="max вероятность" class="border p-2 rounded w-32">
+    
+    <!-- Кнопки действий -->
+    <button onclick="applyFilters()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Фильтровать</button>
+    <button id="togglePaginationBtn" onclick="togglePagination()" class="text-white px-4 py-2 rounded">Пагинация</button>
+    <a href="/manage_tags" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Управление тегами</a>
+
+    <!-- Кнопка "Обобщить" справа -->
+    <button id="summaryBtn" onclick="openSummaryModalForCurrentTopic()" class="bg-purple-600 text-white px-4 py-2 rounded hidden ml-auto">Обобщить</button>
+</div>
+
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="cardsContainer"></div>
+  
+  <div id="paginationControls" class="flex flex-wrap gap-2 justify-center mt-6"></div>
+
+
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50 overflow-auto">
+    <div class="bg-white p-6 rounded-lg max-w-2xl w-full relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-600 text-2xl font-bold">&times;</button>
+      <div id="modalContent" class="mt-8"></div>
+    </div>
+  </div>
+
+  <div id="summaryModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50 overflow-auto">
+    <div class="bg-white p-6 rounded-lg max-w-2xl w-full relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeSummaryModal()" class="absolute top-2 right-2 text-gray-600 text-2xl font-bold">&times;</button>
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Обобщение по теме: <span id="summaryTopicTitle"></span></h2>
+        <button id="doSummarizeBtn" class="bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700" onclick="sendForSummarization()">Суммировать</button>
+      </div>
+      <div id="loadingSpinner" class="hidden w-full text-center my-4">
+         <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+         <p class="mt-2 text-gray-500 text-sm">Суммирование...</p>
+      </div>
+      <pre id="summaryText" class="whitespace-pre-wrap max-h-[60vh] overflow-y-auto"></pre>
+      <div class="mt-4 flex justify-end">
+        <button onclick="saveCombinedMessageAsText()" class="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600">Сохранить как TXT</button>
+        <button onclick="saveCombinedMessageAsJson()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Сохранить как JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="finalSummaryModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50 overflow-auto">
+    <div class="bg-white p-6 rounded-lg max-w-2xl w-full relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeFinalSummaryModal()" class="absolute top-2 right-2 text-gray-600 text-2xl font-bold">&times;</button>
+      <h2 class="text-xl font-bold mb-4">Результат суммирования</h2>
+      <pre id="finalSummaryText" class="whitespace-pre-wrap max-h-[70vh] overflow-y-auto"></pre>
+    </div>
+  </div>
+
+
+  <script>
+    // Изначальные данные сообщений, полученные от Jinja2
+    let messages = {{ messages | tojson | safe }};
+    let filtered = [...messages]; // Рабочая копия для фильтрации
+    let currentTopic = "";
+    let combinedMessageGlobal = "";
+    let allMessages = [];
+    let paginationEnabled = false; // Пагинация по умолчанию выключена
+
+
+    // --- Функции для управления UI и данными ---
+
+    // Рендеринг карточек сообщений
+    function renderCards(data) {
+    const container = document.getElementById("cardsContainer");
+    container.innerHTML = data.map((msg, indexInFiltered) => {
+        // Находим оригинальный индекс сообщения в массиве 'messages'
+        // 'messages' здесь - это глобальный массив всех загруженных сообщений.
+        // Убедитесь, что он правильно инициализирован.
+        const originalIndex = messages.findIndex(m => m.id === msg.id);
+
+        return `
+            <div class="bg-white p-4 rounded shadow relative">
+                <div class="absolute top-2 right-2 text-xs text-gray-400">ID: ${msg.id}</div>
+                <div class="text-sm text-gray-500 mb-1">${new Date(msg.date).toLocaleString()}</div> <div class="mb-2">${msg.message.slice(0, 150)}${msg.message.length > 150 ? "..." : ""}</div>
+
+                <div class="flex flex-wrap gap-2 text-sm mb-2">
+                    ${msg.predicted_tags.map(tag =>
+                        `<span class="bg-green-100 px-2 py-1 rounded inline-flex items-center">
+                            ${tag}
+                            <button onclick="removeTag(${originalIndex}, '${tag}')" class="text-red-500 ml-1 font-bold hover:text-red-700">&times;</button>
+                        </span>`
+                    ).join('')}
+                </div>
+
+                <input type="text" placeholder="Добавить тег" id="tagInput-${originalIndex}" class="border rounded px-2 py-1 text-sm w-1/2 mr-2">
+<button onclick="addTag(${originalIndex})" class="text-sm bg-green-500 text-white px-2 py-1 rounded">Добавить</button>
+
+<div class="text-xs text-gray-500 mt-2">Тема: <span class="font-semibold">${msg.topic_name}</span>, Вероятность: ${msg.topic_probability.toFixed(2)}</div>
+<div class="text-xs text-gray-500 mt-2">
+<button onclick="showModal(${indexInFiltered})" class="absolute bottom-2 right-2 text-blue-600 text-sm underline">Показать полностью</button> </div></div>
+        `;
+    }).join('');
+}
+
+    // Добавление тега к сообщению (обновление данных и UI)
+   async function addTag(originalIndex) {
+  const input = document.getElementById(`tagInput-${originalIndex}`);
+  const newTag = input.value.trim();
+
+  if (!newTag) return;
+
+  const msgId = messages[originalIndex].id;
+  const msg = messages.find(m => m.id === msgId);
+  if (!msg || msg.predicted_tags.includes(newTag)) return;
+
+  msg.predicted_tags.push(newTag);
+  updateTagFilter(newTag);
+  await saveMessageToServer(msg);
+
+  input.value = '';
+  applyFilters();
+}
+
+    // Удаление тега из сообщения
+    async function removeTag(originalIndex, tagToRemove) {
+  const msgId = messages[originalIndex].id;
+  const msg = messages.find(m => m.id === msgId);
+  if (!msg) return;
+
+  msg.predicted_tags = msg.predicted_tags.filter(t => t !== tagToRemove);
+  await saveMessageToServer(msg);
+
+  applyFilters();
+}
+
+    // Обновление выпадающего списка тегов в фильтре
+    function updateTagFilter(newTag) {
+      const tagFilter = document.getElementById("tagFilter");
+      // Проверяем, существует ли уже такой тег в списке
+      const exists = Array.from(tagFilter.options).some(option => option.value === newTag);
+
+      if (!exists) {
+        const option = document.createElement("option");
+        option.value = newTag;
+        option.textContent = newTag;
+        tagFilter.appendChild(option);
+      }
+    }
+
+    // Инициализация фильтра тегов при загрузке страницы
+    function populateTagFilter() {
+      const tagFilter = document.getElementById("tagFilter");
+      const existingTags = new Set(Array.from(tagFilter.options).map(option => option.value));
+
+      messages.forEach(msg => {
+        msg.predicted_tags.forEach(tag => {
+          if (tag && !existingTags.has(tag)) {
+            const option = document.createElement("option");
+            option.value = tag;
+            option.textContent = tag;
+            tagFilter.appendChild(option);
+            existingTags.add(tag); // Добавляем в Set, чтобы не дублировать проверки
+          }
+        });
+      });
+    }
+
+    // Отправка обновленного сообщения на сервер (для сохранения в файл/БД)
+    async function saveMessageToServer(messageData) {
+        console.log("Отправка сообщения на сервер для сохранения:", messageData);
+        try {
+            const response = await fetch('/update_message', { // Это ваш Flask-эндпоинт для обновления сообщения
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(messageData),
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Сообщение успешно обновлено на сервере:', result);
+                // alert('Сообщение успешно сохранено!'); // Можно убрать, если не нужно постоянно уведомлять
+            } else {
+                const errorText = await response.text();
+                console.error(`Ошибка при сохранении сообщения: ${response.status} - ${errorText}`);
+                alert('Ошибка при сохранении сообщения на сервере.');
+            }
+        } catch (error) {
+            console.error('Ошибка сети при сохранении сообщения:', error);
+            alert('Ошибка сети при попытке сохранить сообщение.');
+        }
+    }
+
+    // --- Функции для модальных окон и фильтрации
+
+    function showModal(indexInFiltered) {
+      const msg = filtered[indexInFiltered]; // Используем filtered для показа полного сообщения
+      if (!msg) return;
+
+      let mediaContent = '';
+      if (msg.media_url) {
+        const urls = msg.media_url.split(/[,;]/).map(s => s.trim()).filter(Boolean);
+        urls.forEach(url => {
+          if (url.toLowerCase().endsWith('.mp4')) {
+            mediaContent += `<video controls class="mt-4 max-w-full rounded"><source src="${url}" type="video/mp4"></video>`;
+          } else {
+            mediaContent += `<img src="${url}" class="mt-4 max-w-full rounded" />`;
+          }
+        });
+      }
+
+      document.getElementById("modalContent").innerHTML = `
+        <h2 class="text-xl font-bold mb-2">Полное сообщение</h2>
+        <p class="mb-4 whitespace-pre-line">${msg.message}</p>
+        ${mediaContent}
+      `;
+
+      const modal = document.getElementById("modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function applyFilters() {
+    const tag = document.getElementById("tagFilter").value;
+    currentTopic = document.getElementById("topicFilter").value;
+    const probMin = parseFloat(document.getElementById("probabilityMin").value.replace(',', '.'));
+    const probMax = parseFloat(document.getElementById("probabilityMax").value.replace(',', '.'));
+
+    filtered = messages.filter(msg => {
+        const matchTag = !tag || msg.predicted_tags.includes(tag);
+        const matchTopic = !currentTopic || String(msg.topic_name) === currentTopic;
+        const matchProb = (isNaN(probMin) || msg.topic_probability >= probMin) &&
+                        (isNaN(probMax) || msg.topic_probability <= probMax);
+        return matchTag && matchTopic && matchProb;
+    });
+
+    // После каждого нового фильтра сбрасываем на первую страницу
+    currentPage = 1; 
+    // и вызываем новую функцию отрисовки
+    renderFilteredView(); 
+    
+    updateSummaryButton();
+}
+
+
+    function updateSummaryButton() {
+      const btn = document.getElementById("summaryBtn");
+      if (currentTopic && currentTopic !== "") {
+        btn.classList.remove("hidden");
+      } else {
+        btn.classList.add("hidden");
+      }
+    }
+
+    function openSummaryModalForCurrentTopic() {
+    if (!currentTopic) return;
+
+    const msgs = filtered.filter(m => String(m.topic_name) === currentTopic);
+    combinedMessageGlobal = msgs.map(m => `- ${m.message}`).join("\n\n");
+
+    // Упрощаем отображение темы
+    document.getElementById("summaryTopicTitle").textContent = currentTopic;
+    document.getElementById("summaryText").textContent = combinedMessageGlobal || "Нет сообщений для этой темы.";
+
+    const summaryModal = document.getElementById("summaryModal");
+    summaryModal.classList.remove("hidden");
+    summaryModal.classList.add("flex");
+}
+
+    function closeSummaryModal() {
+      const summaryModal = document.getElementById("summaryModal");
+      summaryModal.classList.add("hidden");
+      summaryModal.classList.remove("flex");
+    }
+
+  async function sendForSummarization() {
+  const summaryTextElement = document.getElementById("summaryText");
+  const combinedText = summaryTextElement.textContent.trim();  // берём текст из модального окна, а не из глобальной переменной
+
+  if (!combinedText) {
+    alert("Нет текста для суммирования.");
+    return;
+  }
+
+  if (!currentTopic) {
+    alert("Не выбрана тема для суммирования.");
+    return;
+  }
+
+  const btn = document.getElementById("doSummarizeBtn");
+  const spinner = document.getElementById("loadingSpinner");
+  btn.disabled = true;
+  btn.classList.add("hidden");
+  spinner.classList.remove("hidden");
+
+  try {
+    console.log("Отправка текста на сервер для суммирования:", combinedText);
+
+    const response = await fetch('/summarize', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text: combinedText, topic: currentTopic }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data.summary) {
+        document.getElementById("finalSummaryText").textContent = data.summary;
+        const finalModal = document.getElementById("finalSummaryModal");
+        finalModal.classList.remove("hidden");
+        finalModal.classList.add("flex");
+        closeSummaryModal();
+      } else {
+        alert("Ошибка: сервер не вернул результат суммирования.");
+      }
+    } else {
+      const errorText = await response.text();
+      alert(`Ошибка при суммировании: ${response.status} - ${errorText}`);
+    }
+  } catch (error) {
+    console.error("Ошибка сети или сервера:", error);
+    alert("Произошла ошибка при отправке запроса на суммирование.");
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove("hidden");
+    spinner.classList.add("hidden");
+  }
+}
+
+
+
+    function closeFinalSummaryModal() {
+      const finalSummaryModal = document.getElementById("finalSummaryModal");
+      finalSummaryModal.classList.add("hidden");
+      finalSummaryModal.classList.remove("flex");
+    }
+
+    function downloadData(filename, data, type) {
+        const blob = new Blob([data], { type: type });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function saveCombinedMessageAsText() {
+        if (!combinedMessageGlobal) {
+            alert("Нет текста для сохранения.");
+            return;
+        }
+        const filename = `обобщение_${currentTopic.replace(/[^a-z0-9]/gi, '_')}.txt`;
+        downloadData(filename, combinedMessageGlobal, 'text/plain');
+    }
+
+    function saveCombinedMessageAsJson() {
+        if (!combinedMessageGlobal) {
+            alert("Нет текста для сохранения.");
+            return;
+        }
+        const dataToSave = {
+            topic: currentTopic,
+            message: combinedMessageGlobal,
+            timestamp: new Date().toISOString()
+        };
+        const filename = `обобщение_${currentTopic.replace(/[^a-z0-9]/gi, '_')}.json`;
+        downloadData(filename, JSON.stringify(dataToSave, null, 2), 'application/json');
+    }
+
+    // Инициализация при загрузке страницы
+    document.addEventListener("DOMContentLoaded", () => {
+      populateTagFilter(); // Заполняем фильтр тегов в начале
+      applyFilters(); // Вызываем applyFilters, чтобы установить currentTopic и обновить кнопку обобщения
+    });
+
+  function saveFinalSummaryAsText() {
+  const summary = document.getElementById("finalSummaryText").textContent.trim();
+  if (!summary) {
+    alert("Нет текста для сохранения.");
+    return;
+  }
+  const filename = `резюме_темы_${currentTopic.replace(/[^a-z0-9]/gi, '_')}.txt`;
+  downloadData(filename, summary, 'text/plain');
+}
+
+function saveFinalSummaryAsJson() {
+  const summary = document.getElementById("finalSummaryText").textContent.trim();
+  if (!summary) {
+    alert("Нет текста для сохранения.");
+    return;
+  }
+  const dataToSave = {
+    topic: currentTopic,
+    summary: summary,
+    timestamp: new Date().toISOString()
+  };
+  const filename = `резюме_темы_${currentTopic.replace(/[^a-z0-9]/gi, '_')}.json`;
+  downloadData(filename, JSON.stringify(dataToSave, null, 2), 'application/json');
+}
+
+let currentPage = 1;
+const itemsPerPage = 9;
+
+function paginate(array, page, perPage) {
+  const start = (page - 1) * perPage;
+  return array.slice(start, start + perPage);
+}
+
+function renderPaginationControls(totalItems) {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const paginationContainer = document.getElementById("paginationControls");
+  if (!paginationContainer) return;
+
+  // Если страниц меньше или одна, пагинация не нужна
+  if (totalPages <= 1) {
+    paginationContainer.innerHTML = '';
+    return;
+  }
+
+  let html = '';
+
+  // Кнопка "Назад"
+  const prevDisabled = currentPage === 1;
+  html += `
+    <button 
+      onclick="changePage(${currentPage - 1})" 
+      class="px-4 py-2 mx-1 text-gray-700 capitalize bg-white rounded-md ${prevDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}"
+      ${prevDisabled ? 'disabled' : ''}
+    >
+      <div class="flex items-center -mx-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-1 rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+        </svg>
+        <span class="mx-1">Назад</span>
+      </div>
+    </button>
+  `;
+
+  // Кнопки страниц
+  for (let i = 1; i <= totalPages; i++) {
+    const isActive = i === currentPage;
+    html += `
+      <button 
+        onclick="changePage(${i})" 
+        class="px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline ${isActive ? 'bg-blue-500 text-white' : 'hover:bg-blue-500 hover:text-white'}"
+      >
+        ${i}
+      </button>
+    `;
+  }
+
+  // Кнопка "Вперед"
+  const nextDisabled = currentPage === totalPages;
+  html += `
+    <button 
+      onclick="changePage(${currentPage + 1})" 
+      class="px-4 py-2 mx-1 text-gray-700 capitalize bg-white rounded-md ${nextDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}"
+      ${nextDisabled ? 'disabled' : ''}
+    >
+      <div class="flex items-center -mx-1">
+        <span class="mx-1">Вперед</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-1 rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </div>
+    </button>
+  `;
+
+  paginationContainer.innerHTML = html;
+}
+
+
+function changePage(newPage) {
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  if (newPage < 1 || newPage > totalPages) return;
+  
+  currentPage = newPage;
+  // Просто перерисовываем вид с новой страницей
+  renderFilteredView();
+}
+
+
+// Функция для переключения режима пагинации
+function togglePagination() {
+    // Разрешаем переключение, только если есть что пагинировать
+    if (filtered.length <= itemsPerPage) return;
+
+    paginationEnabled = !paginationEnabled;
+    currentPage = 1; // Сбрасываем на первую страницу при любом переключении
+    renderFilteredView(); // Перерисовываем интерфейс
+}
+
+// Функция для обновления состояния и вида кнопки пагинации
+function updatePaginationButtonState() {
+    const btn = document.getElementById("togglePaginationBtn");
+    if (!btn) return;
+
+    // Если карточек мало, кнопка неактивна
+    if (filtered.length <= itemsPerPage) {
+        btn.disabled = true;
+        btn.textContent = "Пагинация";
+        btn.className = "text-white px-4 py-2 rounded bg-gray-400 cursor-not-allowed";
+        paginationEnabled = false; // Принудительно выключаем пагинацию
+    } else {
+        // Если карточек много, кнопка активна
+        btn.disabled = false;
+        if (paginationEnabled) {
+            btn.textContent = "Пагинация: Вкл";
+            btn.className = "text-white px-4 py-2 rounded bg-green-500 hover:bg-green-600";
+        } else {
+            btn.textContent = "Пагинация: Выкл";
+            btn.className = "text-white px-4 py-2 rounded bg-red-500 hover:bg-red-600";
+        }
+    }
+}
+
+// Центральная функция для отрисовки (решает, как показывать карточки)
+function renderFilteredView() {
+    updatePaginationButtonState(); // Сначала обновляем состояние кнопки
+
+    const paginationContainer = document.getElementById("paginationControls");
+
+    // Если пагинация включена и есть что пагинировать
+    if (paginationEnabled && filtered.length > itemsPerPage) {
+        const paginatedData = paginate(filtered, currentPage, itemsPerPage);
+        renderCards(paginatedData);
+        renderPaginationControls(filtered.length); // Используем пагинацию
+    } else {
+        // Иначе показываем все карточки и скрываем контролы пагинации
+        renderCards(filtered);
+        if (paginationContainer) {
+            paginationContainer.innerHTML = '';
+        }
+    }
+}
+
+
+  </script>
+
+</body>
+</html>

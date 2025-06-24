@@ -1,0 +1,33 @@
+2025-06-08 04:15:20,274 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-08 04:15:20,274 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-08 04:15:20,274 - INFO -  * Restarting with stat
+2025-06-08 04:15:25,249 - WARNING -  * Debugger is active!
+2025-06-08 04:15:25,252 - INFO -  * Debugger PIN: 114-780-753
+2025-06-08 04:19:40,059 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-08 04:19:40,062 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-08 04:19:40,064 - INFO -  * Restarting with stat
+2025-06-08 04:19:45,135 - WARNING -  * Debugger is active!
+2025-06-08 04:19:45,137 - INFO -  * Debugger PIN: 114-780-753
+2025-06-08 04:23:50,106 - INFO - Database initialized
+2025-06-08 04:23:50,121 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-08 04:23:50,121 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-08 04:23:50,121 - INFO -  * Restarting with stat
+2025-06-08 04:23:55,058 - INFO - Database initialized
+2025-06-08 04:23:55,066 - WARNING -  * Debugger is active!
+2025-06-08 04:23:55,068 - INFO -  * Debugger PIN: 114-780-753
+2025-06-08 04:25:48,566 - INFO -  * Detected change in 'C:\\project\\gem_sum\\project_sum\\app.py', reloading
+2025-06-08 04:25:49,204 - INFO -  * Restarting with stat
+2025-06-08 04:25:49,737 - INFO - Database initialized
+2025-06-08 04:25:49,754 - WARNING -  * Debugger is active!
+2025-06-08 04:25:49,754 - INFO -  * Debugger PIN: 114-780-753
+2025-06-08 04:25:55,043 - INFO - Database initialized
+2025-06-08 04:25:55,069 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-08 04:25:55,069 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-08 04:25:55,069 - INFO -  * Restarting with stat
+2025-06-08 04:25:55,586 - INFO - Database initialized
+2025-06-08 04:25:55,600 - WARNING -  * Debugger is active!
+2025-06-08 04:25:55,602 - INFO -  * Debugger PIN: 114-780-753
