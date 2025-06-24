@@ -1,0 +1,117 @@
+2025-06-01 13:26:11 - text_vectorizer_module - INFO - === Запуск модуля text_vectorizer.py в режиме тестирования ===
+2025-06-01 13:26:11 - text_vectorizer_module - INFO - TF-IDF векторизатор инициализирован с параметрами: max_features=1000, min_df=1, max_df=0.9
+2025-06-01 13:26:11 - text_vectorizer_module - INFO - Начало обучения и преобразования TF-IDF для 5 текстов.
+2025-06-01 13:26:11 - text_vectorizer_module - INFO - TF-IDF векторизация завершена. Получена матрица размером: (5, 27)
+2025-06-01 13:26:11 - text_vectorizer_module - INFO - 
+Размер полученной TF-IDF матрицы:
+2025-06-01 13:26:11 - text_vectorizer_module - INFO - 
+Признаки (слова), извлеченные TF-IDF векторизатором:
+2025-06-01 13:26:11 - text_vectorizer_module - INFO - 
+TF-IDF вектор для первого текста (пример):
+2025-06-01 13:26:11 - text_vectorizer_module - INFO - === Тестирование модуля text_vectorizer.py завершено ===
+2025-06-01 13:32:09 - text_vectorizer_module - INFO - TF-IDF векторизатор инициализирован с параметрами: max_features=1000, min_df=1, max_df=0.9
+2025-06-01 13:32:09 - text_vectorizer_module - INFO - Начало обучения и преобразования TF-IDF для 372 текстов.
+2025-06-01 13:32:09 - text_vectorizer_module - INFO - TF-IDF векторизация завершена. Получена матрица размером: (372, 1000)
+2025-06-01 13:37:12 - text_vectorizer_module - INFO - TF-IDF векторизатор инициализирован с параметрами: max_features=1500, min_df=2, max_df=0.7
+2025-06-01 13:37:12 - text_vectorizer_module - INFO - Начало обучения и преобразования TF-IDF для 372 текстов.
+2025-06-01 13:37:12 - text_vectorizer_module - INFO - TF-IDF векторизация завершена. Получена матрица размером: (372, 1500)
+2025-06-01 13:49:29 - text_vectorizer_module - INFO - TF-IDF векторизатор инициализирован с параметрами: max_features=1500, min_df=2, max_df=0.7
+2025-06-01 13:49:29 - text_vectorizer_module - INFO - Начало обучения и преобразования TF-IDF для 372 текстов.
+2025-06-01 13:49:29 - text_vectorizer_module - INFO - TF-IDF векторизация завершена. Получена матрица размером: (372, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:51:57 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:39 - text_vectorizer_module - INFO - TF-IDF векторизатор инициализирован с параметрами: max_features=1500, min_df=2, max_df=0.7
+2025-06-01 13:52:39 - text_vectorizer_module - INFO - Начало обучения и преобразования TF-IDF для 372 текстов.
+2025-06-01 13:52:39 - text_vectorizer_module - INFO - TF-IDF векторизация завершена. Получена матрица размером: (372, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - Начало преобразования TF-IDF для 1 новых текстов.
+2025-06-01 13:52:52 - text_vectorizer_module - INFO - TF-IDF преобразование завершено. Получена матрица размером: (1, 1500)
+2025-06-01 15:23:07 - text_vectorizer_module - INFO - === Запуск модуля text_vectorizer.py в режиме тестирования ===
+2025-06-01 15:23:07 - text_vectorizer_module - INFO - TF-IDF векторизатор инициализирован с параметрами: max_features=1000, min_df=1, max_df=0.9
+2025-06-01 15:23:07 - text_vectorizer_module - INFO - Начало обучения и преобразования TF-IDF для 5 текстов.
+2025-06-01 15:23:07 - text_vectorizer_module - INFO - TF-IDF векторизация завершена. Получена матрица размером: (5, 27)
+2025-06-01 15:23:07 - text_vectorizer_module - INFO - 
+Размер полученной TF-IDF матрицы:
+2025-06-01 15:23:07 - text_vectorizer_module - INFO - 
+Признаки (слова), извлеченные TF-IDF векторизатором:
+2025-06-01 15:23:07 - text_vectorizer_module - INFO - 
+TF-IDF вектор для первого текста (пример):
+2025-06-01 15:23:07 - text_vectorizer_module - INFO - === Тестирование модуля text_vectorizer.py завершено ===
+2025-06-01 15:23:45 - text_vectorizer_module - INFO - === Запуск модуля text_vectorizer.py в режиме тестирования ===
+2025-06-01 15:23:45 - text_vectorizer_module - INFO - TF-IDF векторизатор инициализирован с параметрами: max_features=1000, min_df=1, max_df=0.9
+2025-06-01 15:23:45 - text_vectorizer_module - INFO - Начало обучения и преобразования TF-IDF для 5 текстов.
+2025-06-01 15:23:45 - text_vectorizer_module - INFO - TF-IDF векторизация завершена. Получена матрица размером: (5, 27)
+2025-06-01 15:23:45 - text_vectorizer_module - INFO - 
+Размер полученной TF-IDF матрицы:
+2025-06-01 15:23:45 - text_vectorizer_module - INFO - 
+Признаки (слова), извлеченные TF-IDF векторизатором:
+2025-06-01 15:23:45 - text_vectorizer_module - INFO - 
+TF-IDF вектор для первого текста (пример):
+2025-06-01 15:23:45 - text_vectorizer_module - INFO - === Тестирование модуля text_vectorizer.py завершено ===

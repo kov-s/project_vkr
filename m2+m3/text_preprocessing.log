@@ -1,0 +1,60 @@
+2025-06-01 12:11:54,425 - text_preprocessor - INFO - ������������� TextPreprocessor...
+2025-06-01 12:11:54,966 - pymorphy2.opencorpora_dict.wrapper - INFO - Loading dictionaries from C:\Users\kov\AppData\Local\Programs\Python\Python312\Lib\site-packages\pymorphy2_dicts_ru\data
+2025-06-01 12:11:54,993 - pymorphy2.opencorpora_dict.wrapper - INFO - format: 2.4, revision: 417127, updated: 2020-10-11T15:05:51.070345
+2025-06-01 12:11:54,996 - text_preprocessor - ERROR - ������ ������������� TextPreprocessor: module 'inspect' has no attribute 'getargspec'
+2025-06-01 12:13:42,390 - text_preprocessor - INFO - ������������� TextPreprocessor...
+2025-06-01 12:13:42,840 - pymorphy3.opencorpora_dict.wrapper - INFO - Loading dictionaries from C:\Users\kov\AppData\Local\Programs\Python\Python312\Lib\site-packages\pymorphy3_dicts_ru\data
+2025-06-01 12:13:42,891 - pymorphy3.opencorpora_dict.wrapper - INFO - format: 2.4, revision: 417150, updated: 2022-01-08T22:09:24.565962
+2025-06-01 12:13:42,896 - text_preprocessor - INFO - TextPreprocessor ������� ���������������
+2025-06-01 12:33:36,533 - main - INFO - Starting data processing pipeline
+2025-06-01 12:33:36,534 - main - INFO - Loading data...
+2025-06-01 12:33:36,534 - data_loader - INFO - === ������ �������� ������ �� messages.csv ===
+2025-06-01 12:33:36,553 - data_loader - INFO - ���� �������� � ����������: utf-8
+2025-06-01 12:33:36,554 - data_loader - INFO - ������� ��������� 372 �����
+2025-06-01 12:33:36,555 - data_loader - INFO - ������ �������������� ���...
+2025-06-01 12:33:36,559 - data_loader - INFO - 
+�������: ['message_id', 'text', 'media_path', 'tags', 'date']
+2025-06-01 12:33:36,560 - data_loader - INFO - ����� �����: 372
+2025-06-01 12:33:36,560 - data_loader - INFO - 
+���� ������:
+2025-06-01 12:33:36,561 - data_loader - INFO - message_id: object
+2025-06-01 12:33:36,561 - data_loader - INFO - text: object
+2025-06-01 12:33:36,561 - data_loader - INFO - media_path: object
+2025-06-01 12:33:36,562 - data_loader - INFO - tags: object
+2025-06-01 12:33:36,562 - data_loader - INFO - date: datetime64[ns]
+2025-06-01 12:33:36,562 - data_loader - INFO - 
+����������� ��������:
+2025-06-01 12:33:36,563 - data_loader - INFO - message_id: 0
+2025-06-01 12:33:36,563 - data_loader - INFO - text: 0
+2025-06-01 12:33:36,563 - data_loader - INFO - media_path: 0
+2025-06-01 12:33:36,564 - data_loader - INFO - tags: 0
+2025-06-01 12:33:36,566 - data_loader - INFO - date: 0
+2025-06-01 12:33:36,566 - data_loader - INFO - 
+������ ������ (������ 3 ������):
+2025-06-01 12:33:36,567 - data_loader - INFO - 
+������ 0:
+2025-06-01 12:33:36,567 - data_loader - INFO - message_id: 26166
+2025-06-01 12:33:36,643 - data_loader - INFO - media_path: static/media/26166.jpg
+2025-06-01 12:33:36,644 - data_loader - INFO - tags: 
+2025-06-01 12:33:36,644 - data_loader - INFO - date: 2025-05-15 11:02:00
+2025-06-01 12:33:36,644 - data_loader - INFO - 
+������ 1:
+2025-06-01 12:33:36,645 - data_loader - INFO - message_id: 26165
+2025-06-01 12:33:36,645 - data_loader - INFO - text: ������������� � ������� � �. �������� ������
+
+16 ��� � 10:00 �� 19:00 ����������� ������������ �����...
+2025-06-01 12:33:36,645 - data_loader - INFO - media_path: 
+2025-06-01 12:33:36,646 - data_loader - INFO - tags: 
+2025-06-01 12:33:36,646 - data_loader - INFO - date: 2025-05-15 10:27:00
+2025-06-01 12:33:36,647 - data_loader - INFO - 
+������ 2:
+2025-06-01 12:33:36,647 - data_loader - INFO - message_id: 26161
+2025-06-01 12:33:36,651 - data_loader - INFO - media_path: static/media/26161.jpg
+2025-06-01 12:33:36,652 - data_loader - INFO - tags: 
+2025-06-01 12:33:36,652 - data_loader - INFO - date: 2025-05-15 10:27:00
+2025-06-01 12:33:36,652 - data_loader - INFO - === �������� ������ ������� ��������� ===
+2025-06-01 12:33:36,652 - main - INFO - Preprocessing text...
+2025-06-01 12:33:36,653 - text_preprocessor - INFO - ������������� TextPreprocessor...
+2025-06-01 12:33:37,113 - pymorphy3.opencorpora_dict.wrapper - INFO - Loading dictionaries from C:\Users\kov\AppData\Local\Programs\Python\Python312\Lib\site-packages\pymorphy3_dicts_ru\data
+2025-06-01 12:33:37,168 - pymorphy3.opencorpora_dict.wrapper - INFO - format: 2.4, revision: 417150, updated: 2022-01-08T22:09:24.565962
+

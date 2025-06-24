@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Parser</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-qcS5Un3/5Lq6+3yE1l7T7rL3D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1VvE3Yj+E9R1XQ2T+N9D2e1vQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-2xl" x-data="{ authStatus: {{ 'true' if auth_status else 'false' }}, showCodeInput: false, phoneInput: '', statusMessage: '', isError: false }">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Telegram Parser</h1>
+
+        <div class="mb-8 p-6 bg-purple-50 border border-purple-200 rounded-lg">
+            <h2 class="text-xl font-semibold text-purple-800 mb-4">Авторизация Telegram</h2>
+            <div x-show="authStatus" class="text-green-700 font-semibold mb-4 text-center">
+                ✅ Вы авторизованы в Telegram.
+            </div>
+            <div x-show="!authStatus">
+                <p x-show="statusMessage" :class="isError ? 'text-red-600' : 'text-blue-600'" class="mb-4 text-center" x-text="statusMessage"></p>
+
+                <form x-show="!showCodeInput"
+                      hx-post="/login/send_code"
+                      hx-trigger="submit"
+                      hx-swap="none"
+                      hx-on::after-request="
+                          if(event.detail.successful) {
+                              showCodeInput = true;
+                              statusMessage = event.detail.xhr.response.message; // Получаем сообщение из JSON
+                              isError = false;
+                              phoneInput = document.getElementById('phone_number_input').value; // Сохраняем номер телефона
+                          } else {
+                              statusMessage = event.detail.xhr.response; // Получаем сообщение об ошибке
+                              isError = true;
+                          }
+                      "
+                      class="space-y-4">
+                    <div>
+                        <label for="phone_number_input" class="block text-sm font-medium text-gray-700">Номер телефона (с кодом страны, например, +79XXXXXXXXX):</label>
+                        <input type="text" id="phone_number_input" name="phone_number" required
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-purple-500 focus:border-purple-500"
+                               placeholder="+79123456789">
+                    </div>
+                    <button type="submit" class="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                        Отправить код
+                    </button>
+                </form>
+
+                <form x-show="showCodeInput"
+                      hx-post="/login/sign_in"
+                      hx-trigger="submit"
+                      hx-swap="none"
+                      hx-on::after-request="
+                          if(event.detail.successful) {
+                              authStatus = true; // Устанавливаем статус авторизации
+                              showCodeInput = false; // Скрываем поле для кода
+                              statusMessage = event.detail.xhr.response.message;
+                              isError = false;
+                              location.reload(); // Перезагружаем страницу для обновления UI
+                          } else {
+                              statusMessage = event.detail.xhr.response; // Получаем сообщение об ошибке
+                              isError = true;
+                          }
+                      "
+                      class="space-y-4">
+                    <input type="hidden" name="phone_number" x-bind:value="phoneInput">
+                    <div>
+                        <label for="auth_code_input" class="block text-sm font-medium text-gray-700">Код подтверждения из Telegram:</label>
+                        <input type="text" id="auth_code_input" name="code" required
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-purple-500 focus:border-purple-500">
+                    </div>
+                    <button type="submit" class="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                        Войти
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div x-show="authStatus" class="mb-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
+            <h2 class="text-xl font-semibold text-blue-800 mb-4">Добавить новый канал/чат</h2>
+            <form hx-post="/channels" hx-target="#channels-list-container" hx-swap="outerHTML" hx-on::after-request="location.reload()" class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Имя (для идентификации):</label>
+                    <input type="text" id="name" name="name" required
+                           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="username_or_link" class="block text-sm font-medium text-gray-700">@Имя канала/чата или ссылка (t.me/...):</label>
+                    <input type="text" id="username_or_link" name="username_or_link" required
+                           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="@my_channel / https://t.me/my_group">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    Добавить канал/чат
+                </button>
+            </form>
+        </div>
+
+        <div x-show="authStatus" id="channels-list-container" class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Настроенные каналы/чаты</h2>
+            {% if channels %}
+                <div class="space-y-4">
+                    {% for channel in channels %}
+                        <div class="p-4 border border-gray-200 rounded-lg bg-gray-50 flex flex-col md:flex-row md:items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900">{{ channel.name }}</h3>
+                                <p class="text-sm text-gray-600">
+                                    <span class="font-medium">Имя/ссылка:</span> {{ channel.username_or_link }}
+                                </p>
+                                <p class="text-sm text-gray-600">
+                                    <span class="font-medium">Последнее ID сообщения:</span> {{ channel.last_message_id if channel.last_message_id else '0' }}
+                                </p>
+                            </div>
+                            <div class="mt-4 md:mt-0 md:ml-4 flex items-center space-x-2">
+                                <form hx-post="/parse" hx-target="body" hx-swap="none" hx-on::after-request="alert('Парсинг запущен в фоновом режиме! Страница обновится через несколько секунд...'); setTimeout(() => location.reload(), 3000);" class="flex items-center space-x-2">
+                                    <input type="hidden" name="channel_id" value="{{ channel.id }}">
+                                    <label for="period_{{ channel.id }}" class="sr-only">Период (часы)</label>
+                                    <input type="number" id="period_{{ channel.id }}" name="time_period_hours"
+                                           placeholder="Период (часы)"
+                                           class="w-28 border border-gray-300 rounded-md shadow-sm p-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                    <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 text-sm">
+                                        Начать парсинг
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-gray-600 text-center py-4">Пока нет добавленных каналов/чатов. Добавьте первый!</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

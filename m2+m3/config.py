@@ -1,0 +1,2 @@
+DEFAULT_INPUT_FILE = 'messages.csv'
+LOGGING_LEVEL = 'INFO'

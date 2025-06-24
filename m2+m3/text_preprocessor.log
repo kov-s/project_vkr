@@ -1,0 +1,231 @@
+2025-06-01 13:09:41 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 13:09:41 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 13:09:41 - text_preprocessor_module - INFO - === Запуск модуля text_preprocessor.py в режиме тестирования ===
+2025-06-01 13:10:58 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 13:10:58 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 13:10:58 - text_preprocessor_module - INFO - === Запуск модуля text_preprocessor.py в режиме тестирования ===
+2025-06-01 13:10:58 - text_preprocessor_module - INFO - Пример исходного DataFrame:
+2025-06-01 13:10:58 - text_preprocessor_module - INFO - Начало предобработки текстов DataFrame...
+2025-06-01 13:12:56 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 13:12:56 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 13:12:56 - text_preprocessor_module - INFO - === Запуск модуля text_preprocessor.py в режиме тестирования ===
+2025-06-01 13:12:56 - text_preprocessor_module - INFO - Пример исходного DataFrame:
+2025-06-01 13:12:56 - text_preprocessor_module - INFO - Начало предобработки текстов DataFrame...
+2025-06-01 13:14:47 - text_preprocessor_module - INFO - Ресурс NLTK 'punkt' уже загружен.
+2025-06-01 13:14:47 - text_preprocessor_module - WARNING - Ресурс NLTK 'stopwords' не найден. Попытка загрузки...
+2025-06-01 13:14:48 - text_preprocessor_module - INFO - Ресурс NLTK 'stopwords' успешно загружен.
+2025-06-01 13:14:48 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 13:14:48 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 13:14:48 - text_preprocessor_module - INFO - === Запуск модуля text_preprocessor.py в режиме тестирования ===
+2025-06-01 13:14:48 - text_preprocessor_module - INFO - Пример исходного DataFrame:
+2025-06-01 13:14:48 - text_preprocessor_module - INFO - Начало предобработки текстов DataFrame...
+2025-06-01 13:20:18 - text_preprocessor_module - INFO - Ресурс NLTK 'punkt' уже загружен.
+2025-06-01 13:20:18 - text_preprocessor_module - WARNING - Ресурс NLTK 'stopwords' не найден. Попытка загрузки...
+2025-06-01 13:20:18 - text_preprocessor_module - INFO - Ресурс NLTK 'stopwords' успешно загружен.
+2025-06-01 13:20:18 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 13:20:18 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 13:20:18 - text_preprocessor_module - INFO - === Запуск модуля text_preprocessor.py в режиме тестирования ===
+2025-06-01 13:20:18 - text_preprocessor_module - INFO - Пример исходного DataFrame:
+2025-06-01 13:20:18 - text_preprocessor_module - INFO - Начало предобработки текстов DataFrame...
+2025-06-01 13:20:18 - text_preprocessor_module - INFO - Предобработка текстов DataFrame завершена.
+2025-06-01 13:20:18 - text_preprocessor_module - INFO - 
+Пример DataFrame после предобработки:
+2025-06-01 13:20:18 - text_preprocessor_module - INFO - === Тестирование модуля text_preprocessor.py завершено ===
+2025-06-01 13:26:10 - text_preprocessor_module - INFO - Ресурс NLTK 'punkt' уже загружен.
+2025-06-01 13:26:10 - text_preprocessor_module - WARNING - Ресурс NLTK 'stopwords' не найден. Попытка загрузки...
+2025-06-01 13:26:10 - text_preprocessor_module - INFO - Ресурс NLTK 'stopwords' успешно загружен.
+2025-06-01 13:26:11 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 13:26:11 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 13:32:05 - text_preprocessor_module - INFO - Ресурс NLTK 'punkt' уже загружен.
+2025-06-01 13:32:05 - text_preprocessor_module - WARNING - Ресурс NLTK 'stopwords' не найден. Попытка загрузки...
+2025-06-01 13:32:06 - text_preprocessor_module - INFO - Ресурс NLTK 'stopwords' успешно загружен.
+2025-06-01 13:32:06 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 13:32:06 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 13:37:08 - text_preprocessor_module - INFO - Ресурс NLTK 'punkt' уже загружен.
+2025-06-01 13:37:08 - text_preprocessor_module - WARNING - Ресурс NLTK 'stopwords' не найден. Попытка загрузки...
+2025-06-01 13:37:08 - text_preprocessor_module - INFO - Ресурс NLTK 'stopwords' успешно загружен.
+2025-06-01 13:37:08 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 13:37:08 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 13:49:25 - text_preprocessor_module - INFO - Ресурс NLTK 'punkt' уже загружен.
+2025-06-01 13:49:25 - text_preprocessor_module - WARNING - Ресурс NLTK 'stopwords' не найден. Попытка загрузки...
+2025-06-01 13:49:25 - text_preprocessor_module - INFO - Ресурс NLTK 'stopwords' успешно загружен.
+2025-06-01 13:49:25 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 13:49:25 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 13:52:35 - text_preprocessor_module - INFO - Ресурс NLTK 'punkt' уже загружен.
+2025-06-01 13:52:35 - text_preprocessor_module - WARNING - Ресурс NLTK 'stopwords' не найден. Попытка загрузки...
+2025-06-01 13:52:35 - text_preprocessor_module - INFO - Ресурс NLTK 'stopwords' успешно загружен.
+2025-06-01 13:52:35 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 13:52:35 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 15:22:27 - text_preprocessor_module - INFO - Ресурс NLTK 'punkt' уже загружен.
+2025-06-01 15:22:27 - text_preprocessor_module - WARNING - Ресурс NLTK 'stopwords' не найден. Попытка загрузки...
+2025-06-01 15:22:27 - text_preprocessor_module - INFO - Ресурс NLTK 'stopwords' успешно загружен.
+2025-06-01 15:22:27 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 15:22:27 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 15:22:27 - text_preprocessor_module - INFO - === Запуск модуля text_preprocessor.py в режиме тестирования ===
+2025-06-01 15:22:27 - text_preprocessor_module - INFO - Пример исходного DataFrame:
+2025-06-01 15:22:27 - text_preprocessor_module - INFO - Начало предобработки текстов DataFrame...
+2025-06-01 15:22:27 - text_preprocessor_module - INFO - Предобработка текстов DataFrame завершена.
+2025-06-01 15:22:27 - text_preprocessor_module - INFO - 
+Пример DataFrame после предобработки:
+2025-06-01 15:22:27 - text_preprocessor_module - INFO - === Тестирование модуля text_preprocessor.py завершено ===
+2025-06-01 15:23:07 - text_preprocessor_module - INFO - Ресурс NLTK 'punkt' уже загружен.
+2025-06-01 15:23:07 - text_preprocessor_module - WARNING - Ресурс NLTK 'stopwords' не найден. Попытка загрузки...
+2025-06-01 15:23:07 - text_preprocessor_module - INFO - Ресурс NLTK 'stopwords' успешно загружен.
+2025-06-01 15:23:07 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 15:23:07 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 15:23:44 - text_preprocessor_module - INFO - Ресурс NLTK 'punkt' уже загружен.
+2025-06-01 15:23:44 - text_preprocessor_module - WARNING - Ресурс NLTK 'stopwords' не найден. Попытка загрузки...
+2025-06-01 15:23:45 - text_preprocessor_module - INFO - Ресурс NLTK 'stopwords' успешно загружен.
+2025-06-01 15:23:45 - text_preprocessor_module - INFO - PyMorphy3 успешно инициализирован.
+2025-06-01 15:23:45 - text_preprocessor_module - INFO - Русские стоп-слова успешно загружены.
+2025-06-01 23:28:10 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-01 23:28:10 - text_preprocessor_module - INFO - Загружено 151 русских стоп-слов.
+2025-06-01 23:28:10 - text_preprocessor_module - INFO - === Запуск модуля text_preprocessor.py в режиме тестирования ===
+2025-06-01 23:28:10 - text_preprocessor_module - INFO - Загружено 1771 записей из messages.csv.
+2025-06-01 23:28:10 - text_preprocessor_module - INFO - Начало предобработки текстов...
+2025-06-01 23:46:59 - text_preprocessor_module - INFO - Предобработка текстов завершена.
+2025-06-01 23:46:59 - text_preprocessor_module - INFO - 
+Оригинальные и предобработанные тексты:
+2025-06-01 23:46:59 - text_preprocessor_module - INFO - === Тестирование модуля text_preprocessor.py завершено ===
+2025-06-01 23:55:47 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-01 23:55:47 - text_preprocessor_module - INFO - Загружено 151 русских стоп-слов.
+2025-06-01 23:55:47 - text_preprocessor_module - INFO - === Запуск модуля text_preprocessor.py в режиме тестирования ===
+2025-06-01 23:55:48 - text_preprocessor_module - INFO - Загружено 1771 записей из messages.csv.
+2025-06-01 23:55:48 - text_preprocessor_module - INFO - Начало предобработки текстов, включая хештеги...
+2025-06-02 00:14:06 - text_preprocessor_module - INFO - Предобработка текстов завершена.
+2025-06-02 00:14:06 - text_preprocessor_module - INFO - 
+Оригинальные, предобработанные тексты и извлеченные хештеги:
+2025-06-02 00:14:06 - text_preprocessor_module - INFO - === Тестирование модуля text_preprocessor.py завершено ===
+2025-06-02 00:26:14 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-02 00:26:14 - text_preprocessor_module - INFO - Загружено 151 русских стоп-слов.
+2025-06-02 00:54:28 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-02 00:54:28 - text_preprocessor_module - INFO - Загружено 151 русских стоп-слов.
+2025-06-02 02:21:44 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-02 02:21:44 - text_preprocessor_module - INFO - Загружено 151 русских стоп-слов.
+2025-06-03 00:24:31 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 00:24:31 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 00:24:32 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 00:24:32 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 00:24:32 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 00:24:32 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 00:24:32 - text_preprocessor_module - INFO - === Запуск модуля text_preprocessor.py в режиме тестирования ===
+2025-06-03 00:24:32 - text_preprocessor_module - INFO - Загружено 1987 записей из messages.csv.
+2025-06-03 00:24:32 - text_preprocessor_module - INFO - Начало предобработки текстов, включая хештеги...
+2025-06-03 01:06:17 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 01:06:17 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 01:06:18 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 01:06:18 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 01:06:18 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 01:06:18 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 02:03:26 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 02:03:26 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 02:03:26 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 02:03:26 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 02:03:26 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 02:03:26 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 02:03:26 - text_preprocessor_module - INFO - Добавлено 9 специфичных стоп-слов.
+2025-06-03 09:27:13 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 09:27:13 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 09:27:14 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 09:27:14 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 09:27:14 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 09:27:14 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 09:27:14 - text_preprocessor_module - INFO - Добавлено 9 специфичных стоп-слов.
+2025-06-03 09:44:44 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 09:44:44 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 09:44:45 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 09:44:45 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 09:44:45 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 09:44:45 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 09:44:45 - text_preprocessor_module - INFO - Добавлено 9 специфичных стоп-слов.
+2025-06-03 09:59:14 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 09:59:14 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 09:59:15 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 09:59:15 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 09:59:15 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 09:59:15 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 09:59:15 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-03 10:16:40 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 10:16:40 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 10:16:41 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 10:16:41 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 10:16:41 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 10:16:41 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 10:16:41 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-03 10:57:07 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 10:57:07 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 10:57:08 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 10:57:08 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 10:57:08 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 10:57:08 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 10:57:08 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-03 11:04:19 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 11:04:19 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 11:04:19 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 11:04:19 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 11:04:19 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 11:04:19 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 11:04:19 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-03 11:12:49 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 11:12:49 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 11:12:50 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 11:12:50 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 11:12:50 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 11:12:50 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 11:12:50 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-03 11:14:26 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 11:14:26 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 11:14:26 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 11:14:26 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 11:14:26 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 11:14:26 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 11:14:26 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-03 11:17:38 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 11:17:38 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 11:17:38 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 11:17:38 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 11:17:38 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 11:17:38 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 11:17:38 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-03 11:20:22 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-03 11:20:22 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-03 11:20:22 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-03 11:20:22 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-03 11:20:22 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-03 11:20:22 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-03 11:20:22 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-04 11:53:41 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-04 11:53:41 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-04 11:53:48 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-04 11:53:48 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-04 11:53:48 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-04 11:53:48 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-04 11:53:48 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-14 01:58:27 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-14 01:58:27 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-14 01:58:28 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-14 01:58:28 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-14 01:58:28 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-14 01:58:28 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-14 01:58:28 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-18 14:47:43 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-18 14:47:43 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-18 14:47:44 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-18 14:47:44 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-18 14:47:44 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-18 14:47:44 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-18 14:47:44 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-19 01:05:22 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-19 01:05:22 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-19 01:05:23 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-19 01:05:23 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-19 01:05:23 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-19 01:05:23 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-19 01:05:23 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.
+2025-06-19 01:51:10 - text_preprocessor_module - INFO - NLTK ресурс 'stopwords' уже загружен.
+2025-06-19 01:51:10 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' не найден. Попытка загрузки...
+2025-06-19 01:51:11 - text_preprocessor_module - INFO - NLTK ресурс 'wordnet' успешно загружен.
+2025-06-19 01:51:11 - text_preprocessor_module - INFO - Mystem лемматизатор инициализирован.
+2025-06-19 01:51:11 - text_preprocessor_module - INFO - WordNetLemmatizer (для английского) инициализирован.
+2025-06-19 01:51:11 - text_preprocessor_module - INFO - Загружено 151 русских и 198 английских стоп-слов.
+2025-06-19 01:51:11 - text_preprocessor_module - INFO - Добавлено 8 специфичных стоп-слов.

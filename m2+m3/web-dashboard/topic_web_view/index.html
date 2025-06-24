@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Темы сообщений</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Анализ Тем с BERTopic</h1>
+
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Поиск по тексту...">
+      <select id="topicFilter">
+        <option value="">Все темы</option>
+      </select>
+      <select id="sortSelect">
+        <option value="default">Сортировка по умолчанию</option>
+        <option value="probability">По убыванию вероятности</option>
+      </select>
+    </div>
+
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Текст</th>
+          <th>Тема</th>
+          <th>Вероятность</th>
+          <th>Хештеги</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

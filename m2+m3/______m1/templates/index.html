@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Парсер</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Telegram Парсер</h1>
+
+        <div id="auth-status-section" class="card">
+            <h2>Статус авторизации Telegram</h2>
+            <div id="auth-status">Загрузка статуса авторизации...</div>
+
+            <div id="auth-form-phone" style="display: none;">
+                <form id="phone-form">
+                    <input type="text" id="phone_number" placeholder="Номер телефона (например, +1234567890)" required>
+                    <button type="submit">Отправить</button>
+                </form>
+            </div>
+
+            <div id="auth-form-code" style="display: none;">
+                <form id="code-form">
+                    <input type="text" id="phone_code" placeholder="Код из Telegram" required>
+                    <button type="submit">Подтвердить код</button>
+                </form>
+            </div>
+
+            <div id="auth-form-password" style="display: none;">
+                <form id="password-form">
+                    <input type="password" id="password" placeholder="Пароль двухфакторной аутентификации" required>
+                    <button type="submit">Подтвердить пароль</button>
+                </form>
+            </div>
+
+            <button id="logout-button" style="display: none;">Выйти из Telegram</button>
+        </div>
+
+        <div id="parser-controls" class="card" style="display: none;">
+            <h2>Управление парсингом</h2>
+            <div id="parser-status">Статус парсинга: Неизвестен</div>
+            <button id="start-parsing-button">Запустить парсинг</button>
+            <button id="stop-parsing-button">Остановить парсинг</button>
+        </div>
+
+        <div id="add-channel-section" class="card" style="display: none;">
+            <h2>Добавить новый канал</h2>
+            <form id="add-channel-form">
+                <input type="text" id="channel_link" placeholder="Ссылка на канал (например, https://t.me/durov)" required>
+                <button type="submit">Добавить канал</button>
+            </form>
+        </div>
+
+        <div id="channels-list-section" class="card" style="display: none;">
+            <h2>Список каналов</h2>
+            <table id="channels-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ссылка</th>
+                        <th>Последний ID сообщения</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+
+        <div id="messages" class="card" style="display: none;">
+            <h2>Сообщения</h2>
+            <pre id="message-display"></pre>
+        </div>
+
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
