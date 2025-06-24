@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Темы</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { max-width: 800px; margin: auto; }
+    h1 { text-align: center; }
+    form { text-align: center; margin-bottom: 20px; }
+    input[type="text"] {
+      padding: 5px;
+      width: 60%;
+      font-size: 1em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th { background-color: #f0f0f0; }
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Темы сообщений</h1>
+    <form method="get" action="{{ url_for('topics') }}">
+      <input type="text" name="search" placeholder="Поиск по теме..." value="{{ search or '' }}" />
+      <button type="submit">Искать</button>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Тема</th>
+          <th>Сообщений</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if topics %}
+          {% for t in topics %}
+            <tr>
+              <td>{{ t.topic }}</td>
+              <td>{{ t.count }}</td>
+              <td>
+                <a href="{{ url_for('index', tag=t.topic) }}">Показать сообщения</a>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="3" style="text-align: center;">Темы не найдены</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
