@@ -16,13 +16,13 @@ api_hash = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 session_name = 'session'
 channel_username = '@xxxxxx'  # @channel_name
 
-# === Путь к файлам ===
+# Путь к файлам 
 media_folder = 'static/mediatest'
 csv_filename = 'messagestest.csv'
 offset_file = 'offsettest.txt'
 os.makedirs(media_folder, exist_ok=True)
 
-# === Функции ===
+# Функции 
 
 def extract_tags(text):
     return re.findall(r"#\w+", text.lower()) if text else []
@@ -45,14 +45,12 @@ def save_offset_id(offset_id):
     with open(offset_file, "w") as f:
         f.write(str(offset_id))
 
-# === Главная асинхронная функция ===
-
 async def fetch_messages():
     saved_ids = load_saved_message_ids()
-    logging.info(f"📂 Уже сохранено сообщений: {len(saved_ids)}")
+    logging.info(f" Уже сохранено сообщений: {len(saved_ids)}")
 
     offset_id = load_offset_id()
-    logging.info(f"🔁 Начинаем с offset_id = {offset_id}")
+    logging.info(f" Начинаем с offset_id = {offset_id}")
 
     async with TelegramClient('session', api_id, api_hash) as client:
         channel = await client.get_entity(channel_username)
@@ -116,13 +114,13 @@ async def fetch_messages():
                                     try:
                                         await asyncio.wait_for(client.download_media(doc, media_path), timeout=60)
                                     except asyncio.TimeoutError:
-                                        media_path = "❌ Ошибка загрузки (таймаут)"
+                                        media_path = "Ошибка загрузки (таймаут)"
                             else:
                                 media_path = os.path.join(media_folder, f"{message.id}.doc")
                                 try:
                                     await asyncio.wait_for(client.download_media(doc, media_path), timeout=60)
                                 except asyncio.TimeoutError:
-                                    media_path = "❌ Ошибка загрузки (таймаут)"
+                                    media_path = "Ошибка загрузки (таймаут)"
 
                     row = {
                         "message_id": message.id,
@@ -140,9 +138,9 @@ async def fetch_messages():
                     save_offset_id(offset_id)
 
                     if total_downloaded % 100 == 0:
-                        logging.info(f"🔄 Обработано {total_downloaded} сообщений...")
+                        logging.info(f"Обработано {total_downloaded} сообщений...")
 
-        logging.info(f"✅ Готово: добавлено {total_downloaded} новых сообщений в {csv_filename}")
+        logging.info(f"Готово: добавлено {total_downloaded} новых сообщений в {csv_filename}")
 
 if __name__ == "__main__":
     asyncio.run(fetch_messages())
