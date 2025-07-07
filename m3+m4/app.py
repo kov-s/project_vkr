@@ -294,7 +294,7 @@ def delete_tag():
 
 
 if __name__ == '__main__':
-    # Для production используйте:
+
     # app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
     # Для разработки:
     app.run(host='127.0.0.1', port=5000, debug=True)
