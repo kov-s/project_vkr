@@ -1,4 +1,4 @@
-# project_sum/database/models.py
+
 from sqlalchemy import Column, Integer, String, DateTime, Float
 from .session import Base # Ensure this import is correct
 
